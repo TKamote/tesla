@@ -75,13 +75,43 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
         quality: 1,
         multiplier: 1,
       });
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = "tesla-meme.png";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      
+      // Create a more descriptive filename with timestamp
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+      const filename = `tesla-meme-${timestamp}.png`;
+      
+      // Try to use the Web Share API on mobile devices
+      if (navigator.share && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Convert dataURL to blob
+        fetch(dataURL)
+          .then(res => res.blob())
+          .then(blob => {
+            const file = new File([blob], filename, { type: 'image/png' });
+            navigator.share({
+              title: 'Tesla Meme',
+              text: 'Check out my Tesla meme!',
+              files: [file]
+            }).catch(err => {
+              console.log('Share failed, falling back to download:', err);
+              downloadFile(dataURL, filename);
+            });
+          })
+          .catch(() => {
+            downloadFile(dataURL, filename);
+          });
+      } else {
+        downloadFile(dataURL, filename);
+      }
     }
+  };
+
+  const downloadFile = (dataURL: string, filename: string) => {
+    const link = document.createElement("a");
+    link.href = dataURL;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
