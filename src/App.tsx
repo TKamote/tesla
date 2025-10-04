@@ -8,17 +8,15 @@ function App() {
 
   return (
     <div className="bg-black text-white min-h-screen">
-      <header className="p-4 sm:p-6 bg-gray-900 border-b border-gray-800">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-xl sm:text-3xl font-bold text-center text-white">
-            Tesla Meme Generator
-          </h1>
-          <p className="text-center text-gray-400 mt-2 text-sm sm:text-base">
-            Create epic Tesla & Elon memes in seconds
-          </p>
-        </div>
+      <header className="p-4 bg-gray-900 border-b border-gray-800">
+        <h1 className="text-2xl font-bold text-center text-white">
+          Tesla Meme Generator
+        </h1>
+        <p className="text-center text-gray-400 mt-2">
+          Create epic Tesla & Elon memes in seconds
+        </p>
       </header>
-      <main className="p-4 sm:p-6 max-w-6xl mx-auto">
+      <main>
         {selectedTemplate ? (
           <MemeEditor selectedTemplate={selectedTemplate} />
         ) : (
