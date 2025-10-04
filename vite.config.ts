@@ -4,5 +4,5 @@ import react from "@vitejs/plugin-react";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/", // Use root path for gh-pages deployment
+  base: "/tesla/", // Use /tesla/ path for GitHub Pages
 });
