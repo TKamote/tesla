@@ -14,8 +14,8 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
     if (!canvasRef.current) return;
 
     const initCanvas = new fabric.Canvas(canvasRef.current, {
-      height: 500,
-      width: 500,
+      height: window.innerWidth < 768 ? 300 : 500,
+      width: window.innerWidth < 768 ? 300 : 500,
       backgroundColor: "grey",
     });
 
@@ -102,17 +102,17 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
               type="text"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-lg focus:border-red-500 focus:outline-none transition-colors text-base"
+              className="w-full bg-gray-800 border border-gray-700 text-white p-4 rounded-lg focus:border-red-500 focus:outline-none transition-colors text-lg"
               placeholder="Enter your meme text..."
             />
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+          <div className="flex flex-col gap-3 w-full">
             <button
               onClick={addText}
-              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 touch-manipulation"
+              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center gap-3 touch-manipulation text-lg"
             >
               <svg
-                className="w-5 h-5"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -128,10 +128,10 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
             </button>
             <button
               onClick={exportMeme}
-              className="bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 touch-manipulation"
+              className="bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center gap-3 touch-manipulation text-lg"
             >
               <svg
-                className="w-5 h-5"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -161,7 +161,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
       <div className="text-center">
         <button
           onClick={() => window.location.reload()}
-          className="text-gray-400 hover:text-white active:text-gray-300 transition-colors text-sm touch-manipulation"
+          className="bg-gray-800 hover:bg-gray-700 active:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors text-sm touch-manipulation"
         >
           ← Back to Templates
         </button>
