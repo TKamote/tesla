@@ -1,0 +1,173 @@
+import React, { useRef, useEffect, useState } from "react";
+import * as fabric from "fabric";
+
+interface MemeEditorProps {
+  selectedTemplate: string;
+}
+
+const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const initCanvas = new fabric.Canvas(canvasRef.current, {
+      height: 500,
+      width: 500,
+      backgroundColor: "grey",
+    });
+
+    setCanvas(initCanvas);
+
+    fabric.Image.fromURL(selectedTemplate, {
+      crossOrigin: "anonymous",
+    })
+      .then((img: fabric.Image) => {
+        if (img) {
+          // Scale the image to fit the canvas
+          const scaleX = initCanvas.width! / img.width!;
+          const scaleY = initCanvas.height! / img.height!;
+          const scale = Math.min(scaleX, scaleY);
+
+          img.scale(scale);
+          img.set({
+            left: (initCanvas.width! - img.width! * scale) / 2,
+            top: (initCanvas.height! - img.height! * scale) / 2,
+          });
+
+          initCanvas.backgroundImage = img;
+          initCanvas.renderAll();
+        }
+      })
+      .catch((error) => {
+        console.error("Error loading image:", error);
+      });
+
+    return () => {
+      initCanvas.dispose();
+    };
+  }, [selectedTemplate]);
+
+  const addText = () => {
+    if (canvas) {
+      const textbox = new fabric.Textbox(text, {
+        left: 50,
+        top: 50,
+        width: 400,
+        fontSize: 40,
+        fill: "white",
+        stroke: "black",
+        strokeWidth: 2,
+        textAlign: "center",
+      });
+      canvas.add(textbox);
+      canvas.setActiveObject(textbox);
+      setText("");
+    }
+  };
+
+  const exportMeme = () => {
+    if (canvas) {
+      const dataURL = canvas.toDataURL({
+        format: "png",
+        quality: 1,
+        multiplier: 1,
+      });
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "tesla-meme.png";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
+  return (
+    <div className="space-y-6 sm:space-y-8">
+      <div className="text-center">
+        <h2 className="text-2xl sm:text-4xl font-bold text-white mb-2 sm:mb-4">
+          Edit Your Meme
+        </h2>
+        <p className="text-gray-400 text-base sm:text-lg">
+          Add text and customize your creation
+        </p>
+      </div>
+
+      <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
+        <div className="flex flex-col gap-4 items-center justify-center mb-4 sm:mb-6">
+          <div className="w-full max-w-md">
+            <input
+              type="text"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-lg focus:border-red-500 focus:outline-none transition-colors text-base"
+              placeholder="Enter your meme text..."
+            />
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <button
+              onClick={addText}
+              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 touch-manipulation"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+              Add Text
+            </button>
+            <button
+              onClick={exportMeme}
+              className="bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 touch-manipulation"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              Export Meme
+            </button>
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+          <div className="bg-gray-800 rounded-lg p-2 sm:p-4 border border-gray-700 max-w-full overflow-hidden">
+            <canvas
+              ref={canvasRef}
+              className="border border-gray-600 rounded-lg shadow-2xl max-w-full h-auto"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="text-center">
+        <button
+          onClick={() => window.location.reload()}
+          className="text-gray-400 hover:text-white active:text-gray-300 transition-colors text-sm touch-manipulation"
+        >
+          ← Back to Templates
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default MemeEditor;
