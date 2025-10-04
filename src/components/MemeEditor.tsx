@@ -55,11 +55,11 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
       const textbox = new fabric.Textbox(text, {
         left: 50,
         top: 50,
-        width: 400,
-        fontSize: 40,
+        width: 200,
+        fontSize: 20,
         fill: "white",
         stroke: "black",
-        strokeWidth: 2,
+        strokeWidth: 1,
         textAlign: "center",
       });
       canvas.add(textbox);
@@ -135,12 +135,12 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
 
       <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
         <div className="flex flex-col gap-4 items-center justify-center mb-4 sm:mb-6">
-          <div className="w-full max-w-sm">
+          <div className="w-full max-w-xs">
             <input
               type="text"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 text-white p-4 rounded-lg focus:border-red-500 focus:outline-none transition-colors text-lg"
+              className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-lg focus:border-red-500 focus:outline-none transition-colors text-base"
               placeholder="Enter your meme text..."
             />
           </div>

@@ -10,7 +10,7 @@ function App() {
     <div className="bg-black text-white min-h-screen">
       <header className="p-4 sm:p-6 bg-gray-900 border-b border-gray-800">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-2xl sm:text-3xl font-bold text-center text-white">
+          <h1 className="text-xl sm:text-3xl font-bold text-center text-white">
             Tesla Meme Generator
           </h1>
           <p className="text-center text-gray-400 mt-2 text-sm sm:text-base">
