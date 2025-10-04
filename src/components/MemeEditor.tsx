@@ -129,7 +129,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded mb-3"
+          className="w-md bg-gray-800 border border-gray-700 text-white p-3 rounded mb-3 h-10"
           placeholder="Enter your meme text..."
         />
 
