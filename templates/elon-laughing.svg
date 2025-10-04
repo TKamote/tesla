@@ -1,0 +1,36 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="elonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d2d2d;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="500" fill="url(#elonGrad)"/>
+  
+  <!-- Tesla Red Accent -->
+  <rect x="0" y="0" width="500" height="80" fill="#e31e24"/>
+  
+  <!-- Main Content Area -->
+  <rect x="50" y="100" width="400" height="300" fill="#333333" stroke="#e31e24" stroke-width="3" rx="10"/>
+  
+  <!-- Elon Face Silhouette -->
+  <circle cx="250" cy="200" r="60" fill="#555555"/>
+  <circle cx="240" cy="190" r="8" fill="#777777"/>
+  <circle cx="260" cy="190" r="8" fill="#777777"/>
+  <path d="M 220 220 Q 250 240 280 220" stroke="#777777" stroke-width="4" fill="none"/>
+  
+  <!-- Laughing Lines -->
+  <path d="M 180 180 Q 200 160 220 180" stroke="#e31e24" stroke-width="2" fill="none"/>
+  <path d="M 280 180 Q 300 160 320 180" stroke="#e31e24" stroke-width="2" fill="none"/>
+  
+  <!-- Text Area -->
+  <rect x="50" y="420" width="400" height="60" fill="#1a1a1a" stroke="#e31e24" stroke-width="2" rx="5"/>
+  
+  <!-- Tesla Logo -->
+  <text x="250" y="30" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">TESLA</text>
+  
+  <!-- Template Label -->
+  <text x="250" y="450" text-anchor="middle" fill="#e31e24" font-family="Arial, sans-serif" font-size="16" font-weight="bold">ELON LAUGHING</text>
+</svg>
