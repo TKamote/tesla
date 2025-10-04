@@ -75,26 +75,34 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
         quality: 1,
         multiplier: 1,
       });
-      
+
       // Create a more descriptive filename with timestamp
-      const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+      const timestamp = new Date()
+        .toISOString()
+        .slice(0, 19)
+        .replace(/:/g, "-");
       const filename = `tesla-meme-${timestamp}.png`;
-      
+
       // Try to use the Web Share API on mobile devices
-      if (navigator.share && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      if (
+        navigator.share &&
+        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+      ) {
         // Convert dataURL to blob
         fetch(dataURL)
-          .then(res => res.blob())
-          .then(blob => {
-            const file = new File([blob], filename, { type: 'image/png' });
-            navigator.share({
-              title: 'Tesla Meme',
-              text: 'Check out my Tesla meme!',
-              files: [file]
-            }).catch(err => {
-              console.log('Share failed, falling back to download:', err);
-              downloadFile(dataURL, filename);
-            });
+          .then((res) => res.blob())
+          .then((blob) => {
+            const file = new File([blob], filename, { type: "image/png" });
+            navigator
+              .share({
+                title: "Tesla Meme",
+                text: "Check out my Tesla meme!",
+                files: [file],
+              })
+              .catch((err) => {
+                console.log("Share failed, falling back to download:", err);
+                downloadFile(dataURL, filename);
+              });
           })
           .catch(() => {
             downloadFile(dataURL, filename);
@@ -127,7 +135,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
 
       <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
         <div className="flex flex-col gap-4 items-center justify-center mb-4 sm:mb-6">
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-sm">
             <input
               type="text"
               value={text}
@@ -136,13 +144,13 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
               placeholder="Enter your meme text..."
             />
           </div>
-          <div className="flex flex-col gap-3 w-full">
+          <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
             <button
               onClick={addText}
-              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center gap-3 touch-manipulation text-lg"
+              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 touch-manipulation text-base flex-1"
             >
               <svg
-                className="w-6 h-6"
+                className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -154,14 +162,15 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
                   d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                 />
               </svg>
-              Add Text
+              <span className="hidden sm:inline">Add Text</span>
+              <span className="sm:hidden">Add</span>
             </button>
             <button
               onClick={exportMeme}
-              className="bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center gap-3 touch-manipulation text-lg"
+              className="bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 touch-manipulation text-base flex-1"
             >
               <svg
-                className="w-6 h-6"
+                className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -173,7 +182,8 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ selectedTemplate }) => {
                   d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                 />
               </svg>
-              Export Meme
+              <span className="hidden sm:inline">Export Meme</span>
+              <span className="sm:hidden">Export</span>
             </button>
           </div>
         </div>
